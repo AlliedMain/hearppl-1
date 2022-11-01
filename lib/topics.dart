@@ -288,47 +288,53 @@ class _TopicsState extends State<Topics> {
                           ),
                         ),
                       ),
-                      _isSubmitted
-                          ? Center(child: CircularProgressIndicator())
-                          : Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                bottom: 30.0,
-                                left: MediaQuery.of(context).size.height * 0.02,
-                                right:
-                                    MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              child: InkResponse(
-                                onTap: () {
-                                  saveTopics();
-                                  // print(selectedTopics);
-                                  // Future.delayed(const Duration(seconds: 0), () {
-                                  //   Navigator.of(context).pop();
-                                  //   Navigator.push(context,
-                                  //       CupertinoPageRoute(builder: (_) => Home()));
-                                  // });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: c.getColor("black"),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Continue",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: c.getFontSizeLabel(context),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                     ],
                   )),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: c.getColor("black"),
+        onPressed: () {
+          saveTopics();
+        },
+        label: _isSubmitted
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: EdgeInsets.only(
+                  // top: 30.0,
+                  // bottom: 30.0,
+                  left: MediaQuery.of(context).size.height * 0.02,
+                  right: MediaQuery.of(context).size.height * 0.02,
+                ),
+                child: InkResponse(
+                  onTap: () {
+                    saveTopics();
+                    // print(selectedTopics);
+                    // Future.delayed(const Duration(seconds: 0), () {
+                    //   Navigator.of(context).pop();
+                    //   Navigator.push(context,
+                    //       CupertinoPageRoute(builder: (_) => Home()));
+                    // });
+                  },
+                  child: Container(
+                    // padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: c.getColor("black"),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Continue",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: c.getFontSizeLabel(context),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
       ),
     );
   }

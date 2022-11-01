@@ -199,7 +199,13 @@ class _NotificationsState extends State<Notifications> {
             )
           : no_records
               ? Center(
-                  child: Text("No Notifications Found"),
+                  child: Text(
+                    "No Notifications Found",
+                    style: TextStyle(
+                      color: c.getColor("light_black"),
+                      fontSize: c.getFontSizeLarge(context) - 10,
+                    ),
+                  ),
                 )
               : ListView.builder(
                   itemCount: data?.length,

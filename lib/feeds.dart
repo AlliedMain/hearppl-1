@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_video_player/cached_video_player.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -78,6 +79,12 @@ class _FeedsState extends State<Feeds> {
       var jsonval = json.decode(js);
       data_posts = jsonval["response"];
       if (data_posts[0]['status'] == "success") {
+        // for (int d = 0; d < data_posts.length; d++) {
+        //   late CachedVideoPlayerController controller;
+        //   controller =
+        //       CachedVideoPlayerController.network(data_posts[d]['video']);
+        //   controller.initialize().then((value) {});
+        // }
         setState(() {
           isLoading = false;
         });
@@ -118,7 +125,7 @@ class _FeedsState extends State<Feeds> {
 
   void initState() {
     super.initState();
-    print("heuy infeeds [age");
+    // print("heuy infeeds [age");
     print(widget.data);
     if (widget.data == null) {
       c.getshared("Feedposts").then((value) {
@@ -130,7 +137,6 @@ class _FeedsState extends State<Feeds> {
           if (value != '' && value != null && value != ' ' && value != 'null') {
             setState(() {
               posts(value);
-              // print("user id is $user_id");
             });
           }
         });
@@ -171,7 +177,7 @@ class _FeedsState extends State<Feeds> {
                       // return ChewieDemo(url:url);
                     })),
       ),
-      bottomNavigationBar: BottomNav(currentPage: 2),
+      // bottomNavigationBar: BottomNav(currentPage: 2),
     );
   }
 }

@@ -53,49 +53,6 @@ class _IntrosState extends State<Intros> {
 
   void initState() {
     super.initState();
-
-    listContentConfig.add(
-      const ContentConfig(
-        description:
-            "Hearppl enables people to share videos about the latest events happening in and around them so that people can see and hear real news straight from the source.",
-        pathImage: "assets/slider-3.png",
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        styleDescription: TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          height: 1.8,
-        ),
-        textAlignDescription: TextAlign.center,
-      ),
-    );
-    listContentConfig.add(
-      const ContentConfig(
-        description:
-            "No manipulated media, no ads, just plain news from people on the ground direct to your phones. Simply add #YOURTOPIC with @LOCATION and upload it for other people to watch and hear in one click ",
-        pathImage: "assets/slider-4.png",
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        styleDescription: TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          height: 1.8,
-        ),
-        textAlignDescription: TextAlign.center,
-      ),
-    );
-    listContentConfig.add(
-      const ContentConfig(
-        description:
-            "Still wondering how to begin. Don't worry; choose the topics that interest you the most on the next screen and begin your journey of Hearing from the People.",
-        pathImage: "assets/slider-5.png",
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        styleDescription: TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          height: 1.8,
-        ),
-        textAlignDescription: TextAlign.center,
-      ),
-    );
   }
 
   void onDonePress() {
@@ -116,7 +73,50 @@ class _IntrosState extends State<Intros> {
           padding: const EdgeInsets.all(18.0),
           child: IntroSlider(
             key: UniqueKey(),
-            listContentConfig: listContentConfig,
+            listContentConfig: [
+              ContentConfig(
+                heightImage: c.deviceHeight(context) * 0.3,
+                widthImage: c.deviceWidth(context) * 0.8,
+                description:
+                    "Hearppl enables people to share videos about the latest events happening in and around them so that people can see and hear real news straight from the source.",
+                pathImage: "assets/slider-3.png",
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                styleDescription: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  height: 1.8,
+                ),
+                textAlignDescription: TextAlign.center,
+              ),
+              ContentConfig(
+                heightImage: c.deviceHeight(context) * 0.3,
+                widthImage: c.deviceWidth(context) * 0.8,
+                description:
+                    "No manipulated media, no ads, just plain news from people on the ground direct to your phones. Simply add #YOURTOPIC with @LOCATION and upload it for other people to watch and hear in one click ",
+                pathImage: "assets/slider-4.png",
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                styleDescription: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  height: 1.8,
+                ),
+                textAlignDescription: TextAlign.center,
+              ),
+              ContentConfig(
+                heightImage: c.deviceHeight(context) * 0.3,
+                widthImage: c.deviceWidth(context) * 0.8,
+                description:
+                    "Still wondering how to begin. Don't worry; choose the topics that interest you the most on the next screen and begin your journey of Hearing from the People.",
+                pathImage: "assets/slider-5.png",
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                styleDescription: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  height: 1.8,
+                ),
+                textAlignDescription: TextAlign.center,
+              ),
+            ],
             onDonePress: onDonePress,
           ),
         )),

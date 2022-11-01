@@ -41,7 +41,6 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isSubmitted = false;
   // Response? form_response;
-
   List<String> topics = [];
   bool hide_password = true;
   void showInSnackBar(String value) {
@@ -224,6 +223,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    double _width = c.deviceWidth(context);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
@@ -359,7 +359,8 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                           SizedBox(
-                            height: c.deviceHeight(context) * 0.2,
+                            height: c.deviceHeight(context) * 0.23,
+                            // width: c.deviceWidth(context) * 0.8,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: data_posts[i]['posts'].length,
@@ -375,7 +376,7 @@ class _HomeState extends State<Home> {
                                     },
                                     child: SizedBox(
                                         // height: c.deviceHeight(context) * 0.2,
-                                        width: c.deviceWidth(context) * 0.4,
+                                        width: c.deviceWidth(context) * 0.46,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: ClipRRect(
@@ -387,8 +388,12 @@ class _HomeState extends State<Home> {
                                                 placeholder: (context, url) =>
                                                     const Padding(
                                                   padding: EdgeInsets.all(58.0),
-                                                  child:
-                                                      CircularProgressIndicator(),
+                                                  child: Card(
+                                                    child: SizedBox(
+                                                      width: 550,
+                                                      height: 550,
+                                                    ),
+                                                  ),
                                                 ),
                                                 fit: BoxFit.cover,
                                                 errorWidget: (context, url,

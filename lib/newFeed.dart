@@ -286,6 +286,7 @@ class _NewFeedState extends State<NewFeed> {
         print("Saved to galley");
         print(data);
       });
+      compress(imagex!.path);
       showModalBottomSheetCupetino();
     }
     // XFile video = await controller.stopVideoRecording();
@@ -610,9 +611,9 @@ class _NewFeedState extends State<NewFeed> {
                               _isSubmitted = true;
                             });
                             // Navigator.of(context).pop("cancel");
-                            c
-                                .getshared("user_id")
-                                .then((value) => _login(value));
+                            c.getshared("user_id").then((value) {
+                              _login(value);
+                            });
                             StatusAlert.show(
                               context,
                               duration: Duration(seconds: 2),
@@ -673,6 +674,18 @@ class _NewFeedState extends State<NewFeed> {
     );
   }
 
+  compress(path) async {
+    MediaInfo? mediaInfo = await VideoCompress.compressVideo(
+      path,
+      quality: VideoQuality.DefaultQuality,
+      deleteOrigin: false, // It's false by default
+    );
+    setState(() {
+      var str = mediaInfo!.path;
+      imagex = File(str!);
+    });
+  }
+
   _login(user_id) async {
     setState(() {
       print("trying");
@@ -691,8 +704,8 @@ class _NewFeedState extends State<NewFeed> {
           "topic": currentSelectedValue.toString(),
           "user_id": user_id,
           "files": await MultipartFile.fromFile(
-            imagex!.path,
-            filename: imagex!.path.toString().split("/").last,
+            (imagex!.path),
+            filename: (imagex!.path).toString().split("/").last,
           ),
         });
         print(formData);

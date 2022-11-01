@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chips_choice/chips_choice.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ import 'package:hearppl/register.dart';
 import 'package:hearppl/topics.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:progressive_image/progressive_image.dart';
 import 'package:status_alert/status_alert.dart';
 import 'dart:io';
 import 'package:flutter_initicon/flutter_initicon.dart';
@@ -264,8 +264,10 @@ class _FeedsViewState extends State<FeedsView> {
       videoPlayerController: _videoPlayerController1,
       autoPlay: true,
       looping: true,
-      aspectRatio:
-          c.deviceHeight(context) * 0.81 / c.deviceWidth(context) * 0.31,
+
+      aspectRatio: _videoPlayerController1.value.aspectRatio,
+      // _videoPlayerController1.value.aspectRatio,
+      // c.deviceHeight(context) * 0.00061,
       // aspectRatio: 9 / 16,
       deviceOrientationsAfterFullScreen: [
         DeviceOrientation.portraitUp,
@@ -398,22 +400,41 @@ class _FeedsViewState extends State<FeedsView> {
         child: Stack(children: [
           _chewieController != null &&
                   _chewieController!.videoPlayerController.value.isInitialized
-              ? Chewie(
-                  controller: _chewieController!,
+              ? SizedBox(
+                  height: c.deviceHeight(context),
+                  width: c.deviceWidth(context),
+                  child: Transform.scale(
+                    scale: _videoPlayerController1.value.aspectRatio * 2.13,
+                    child: Chewie(
+                      controller: _chewieController!,
+                    ),
+                  ),
                 )
               : Positioned(
-                  child: CachedNetworkImage(
-                  imageUrl: widget.data['thumbnail'],
-                  placeholder: (context, url) => const Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: ProgressiveImage(
+                  placeholder: AssetImage(widget.data['thumbnail']),
+                  // size: 1.87KB
+                  thumbnail: NetworkImage(widget.data['thumbnail']),
+                  // size: 1.29MB
+                  image: NetworkImage(widget.data['thumbnail']),
                   width: c.deviceWidth(context),
                   height: c.deviceHeight(context),
-                  fit: BoxFit.fill,
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.circle_outlined),
-                )),
+                )
+                  //   progressive_image(
+                  //     child: CachedNetworkImage(
+                  //     imageUrl: widget.data['thumbnail'],
+                  //     placeholder: (context, url) => const Padding(
+                  //       padding: EdgeInsets.all(18.0),
+                  //       child: Text(" "),
+                  //     ),
+                  //     width: c.deviceWidth(context),
+                  //     height: c.deviceHeight(context),
+                  //     fit: BoxFit.fill,
+                  //     errorWidget: (context, url, error) =>
+                  //         const Icon(Icons.circle_outlined),
+                  // ),
+                  // )
+                  ),
           Positioned(
             top: 5,
             child: Container(
@@ -440,7 +461,7 @@ class _FeedsViewState extends State<FeedsView> {
                           child: Icon(
                             Icons.close,
                             color: Colors.white,
-                            size: c.deviceWidth(context) * 0.09,
+                            size: c.deviceWidth(context) * 0.07,
                           ),
                         ),
                       ),
@@ -480,7 +501,7 @@ class _FeedsViewState extends State<FeedsView> {
                                   ? Icons.volume_up_rounded
                                   : Icons.volume_mute_rounded,
                               color: Colors.white,
-                              size: c.deviceWidth(context) * 0.09,
+                              size: c.deviceWidth(context) * 0.07,
                             ),
                           ),
                         ),
@@ -512,7 +533,7 @@ class _FeedsViewState extends State<FeedsView> {
                             child: Icon(
                               Icons.report,
                               color: Colors.white,
-                              size: c.deviceWidth(context) * 0.09,
+                              size: c.deviceWidth(context) * 0.07,
                             ),
                           ),
                         )
@@ -771,9 +792,10 @@ class _FeedsViewState extends State<FeedsView> {
                                           blurRadius: 10.0,
                                         ),
                                       ]),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.person,
                                     color: Colors.white,
+                                    size: c.deviceWidth(context) * 0.07,
                                   ),
                                 ),
                               ],

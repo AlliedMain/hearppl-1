@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
             c.setshared("email", data![0]['email']);
             Future.delayed(Duration(seconds: 2), () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Topics()));
+                  context, MaterialPageRoute(builder: (context) => Intros()));
             });
             _isSubmitted = false;
           }
@@ -141,7 +141,10 @@ class _LoginPageState extends State<LoginPage> {
                                 padding: EdgeInsets.only(
                                     left: 20, right: 20, top: 20),
                                 child: Container(
-                                    child: Image.asset("assets/slider-1.png")),
+                                    child: Image.asset(
+                                  "assets/slider-1.png",
+                                  width: c.deviceWidth(context) * 0.8,
+                                )),
                               ),
                             ),
                           ),

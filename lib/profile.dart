@@ -21,6 +21,7 @@ import 'package:hearppl/register.dart';
 import 'package:hearppl/bottomNav.dart';
 import 'package:hearppl/topics.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
@@ -345,6 +346,84 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  deletePost(id) async {
+    var user_id = '';
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 2),
+      title: 'Deleted!',
+      subtitle: 'Your post is successfully deleted',
+      configuration: IconConfiguration(
+        icon: Icons.delete_forever_rounded,
+      ),
+      // maxWidth: 260,
+    );
+    c.getshared("user_id").then((value) {
+      setState(() {
+        user_id = value;
+      });
+    });
+    try {
+      var dio = Dio();
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData formData = new FormData.fromMap({
+          "deletePost": "deletePost",
+          "comment_id": id,
+          "user_id": user_id,
+        });
+        try {
+          form_response = await dio.post(
+            c.getURL() + 'posts.php',
+            data: formData,
+          );
+        } on DioError catch (e) {
+          print(e.message);
+        }
+        print("Lieked ");
+        // print(form_response.toString());
+      } else {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => NoInternet()),
+            ModalRoute.withName('/NoInternet'));
+      }
+    } catch (e, s) {
+      print("Error " + e.toString() + " Stack " + s.toString());
+    }
+  }
+
+  showAlert(BuildContext context, id) {
+    // set up the button
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Deleting Post"),
+      content: Text("Are you sure you want to delete this post?"),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text("Confirm"),
+          onPressed: () {
+            deletePost(id);
+          },
+        )
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -636,6 +715,13 @@ class _ProfileState extends State<Profile> {
                                       itemBuilder:
                                           (BuildContext context, int i) {
                                         return GestureDetector(
+                                          onLongPress: () {
+                                            print("lomg");
+                                            is_my_profile
+                                                ? showAlert(context,
+                                                    data_posts[i]['id'])
+                                                : print("Deleteing");
+                                          },
                                           onTap: () {
                                             Navigator.push(
                                                 context,
@@ -684,84 +770,99 @@ class _ProfileState extends State<Profile> {
                   : Container(
                       child: isLoadingFollowers
                           ? Container()
-                          : SizedBox(
-                              width: c.deviceWidth(context) * 0.6,
-                              child: ListView.builder(
-                                  itemCount: data_followers.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, i) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        // color: c.getColor("light_blue"),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.height *
-                                                0.02,
-                                        right:
-                                            MediaQuery.of(context).size.height *
-                                                0.02,
-                                      ),
-                                      child: ListTile(
-                                        leading: Initicon(
-                                            text: data_followers[i]['alias']
-                                                .toString(),
-                                            elevation: 4),
-                                        title: Text(
-                                          data_followers[i]['alias'],
-                                          style: TextStyle(
-                                              fontSize:
-                                                  c.getFontSizeLabel(context) -
-                                                      3,
-                                              color: Colors.black,
-                                              fontFamily: c.fontFamily()),
-                                        ),
-                                        subtitle: Text.rich(
-                                          TextSpan(
-                                            style: TextStyle(
-                                                fontSize:
-                                                    c.getFontSizeXS(context) -
-                                                        3,
-                                                fontFamily: c.fontFamily()),
-                                            children: [
-                                              TextSpan(
-                                                text: data_followers[i]
-                                                        ['added_on']
-                                                    .toString(),
-                                              ),
-                                            ],
+                          : no_followers
+                              ? Center(
+                                  child: Text(
+                                    "0 Followers",
+                                    style: TextStyle(
+                                      color: c.getColor("light_black"),
+                                      fontSize:
+                                          c.getFontSizeLarge(context) - 10,
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(
+                                  width: c.deviceWidth(context) * 0.6,
+                                  child: ListView.builder(
+                                      itemCount: data_followers.length,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, i) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            // color: c.getColor("light_blue"),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
-                                        ),
-                                        trailing: InkResponse(
-                                          onTap: () {
-                                            _updateLike();
-                                          },
-                                          child: Container(
-                                            width: c.deviceWidth(context) * 0.2,
-                                            decoration: BoxDecoration(
-                                              color: c.getColor("light_blue"),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "Follow",
-                                                style: TextStyle(
+                                          margin: EdgeInsets.only(
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02,
+                                          ),
+                                          child: ListTile(
+                                            leading: Initicon(
+                                                text: data_followers[i]['alias']
+                                                    .toString(),
+                                                elevation: 4),
+                                            title: Text(
+                                              data_followers[i]['alias'],
+                                              style: TextStyle(
+                                                  fontSize: c.getFontSizeLabel(
+                                                          context) -
+                                                      3,
                                                   color: Colors.black,
-                                                  fontSize:
-                                                      c.getFontSizeXS(context),
+                                                  fontFamily: c.fontFamily()),
+                                            ),
+                                            subtitle: Text.rich(
+                                              TextSpan(
+                                                style: TextStyle(
+                                                    fontSize: c.getFontSizeXS(
+                                                            context) -
+                                                        3,
+                                                    fontFamily: c.fontFamily()),
+                                                children: [
+                                                  TextSpan(
+                                                    text: data_followers[i]
+                                                            ['added_on']
+                                                        .toString(),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            trailing: InkResponse(
+                                              onTap: () {
+                                                _updateLike();
+                                              },
+                                              child: Container(
+                                                width: c.deviceWidth(context) *
+                                                    0.2,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      c.getColor("light_blue"),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Follow",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: c.getFontSizeXS(
+                                                          context),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            ),
+                                        );
+                                      }),
+                                ),
                     ),
             ],
           ),
