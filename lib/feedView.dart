@@ -16,8 +16,7 @@ import 'package:hearppl/home.dart';
 import 'package:hearppl/profile.dart';
 import 'package:hearppl/register.dart';
 import 'package:hearppl/topics.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:intro_slider/intro_slider.dart'; 
 import 'package:progressive_image/progressive_image.dart';
 import 'package:status_alert/status_alert.dart';
 import 'dart:io';
@@ -56,12 +55,12 @@ class _FeedsViewState extends State<FeedsView> {
 
   double volume = 100;
   void showModalBottomSheetCupetino() async {
-    await showCupertinoModalBottomSheet(
+    await showModalBottomSheet(
       useRootNavigator: true,
       context: context,
-      bounce: true,
+      // bounce: true,
       isDismissible: true,
-      expand: true,
+      // expand: true,
       builder: (context) => Material(
         child: ListView(
           shrinkWrap: true,
@@ -411,30 +410,18 @@ class _FeedsViewState extends State<FeedsView> {
                   ),
                 )
               : Positioned(
-                  child: ProgressiveImage(
-                  placeholder: AssetImage(widget.data['thumbnail']),
-                  // size: 1.87KB
-                  thumbnail: NetworkImage(widget.data['thumbnail']),
-                  // size: 1.29MB
-                  image: NetworkImage(widget.data['thumbnail']),
-                  width: c.deviceWidth(context),
-                  height: c.deviceHeight(context),
-                )
-                  //   progressive_image(
-                  //     child: CachedNetworkImage(
-                  //     imageUrl: widget.data['thumbnail'],
-                  //     placeholder: (context, url) => const Padding(
-                  //       padding: EdgeInsets.all(18.0),
-                  //       child: Text(" "),
-                  //     ),
-                  //     width: c.deviceWidth(context),
-                  //     height: c.deviceHeight(context),
-                  //     fit: BoxFit.fill,
-                  //     errorWidget: (context, url, error) =>
-                  //         const Icon(Icons.circle_outlined),
-                  // ),
-                  // )
+                  child: CachedNetworkImage(
+                    imageUrl: widget.data['thumbnail'],
+                    placeholder: (context, url) => Image.asset(
+                      "assets/load.gif",
+                    ),
+                    width: c.deviceWidth(context),
+                    height: c.deviceHeight(context),
+                    fit: BoxFit.fill,
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.circle_outlined),
                   ),
+                ),
           Positioned(
             top: 5,
             child: Container(

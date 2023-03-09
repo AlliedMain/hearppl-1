@@ -221,11 +221,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                   MediaQuery.of(context).size.height * 0.082,
                               width: MediaQuery.of(context).size.width * 8.0,
                               child: TextFormField(
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.text,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     // return 'Mobile number is mandatory';
                                     return 'Email ID cannot be empty';
+                                  }
+                                  if (!value.contains("@")) {
+                                    // return 'Mobile number is mandatory';
+                                    return 'Invalid Email ID';
                                   }
                                 },
                                 controller: email,

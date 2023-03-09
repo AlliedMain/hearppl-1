@@ -56,7 +56,7 @@ class _FeedsState extends State<Feeds> {
   List<ContentConfig> listContentConfig = [];
   var close = 0;
   Future<bool> _exitApp(BuildContext context) async {
-    if (close == 0) {
+    if (close == 1) {
       showInSnackBar("Press back again to close app");
       close++;
     } else {

@@ -384,22 +384,17 @@ class _HomeState extends State<Home> {
                                                   BorderRadius.circular(18.0),
                                               child: CachedNetworkImage(
                                                 imageUrl: data_posts[i]['posts']
-                                                    [j]['thumbnail'],
+                                                        [j]['thumbnail']  ,
                                                 placeholder: (context, url) =>
-                                                    const Padding(
-                                                  padding: EdgeInsets.all(58.0),
-                                                  child: Card(
-                                                    child: SizedBox(
-                                                      width: 550,
-                                                      height: 550,
-                                                    ),
-                                                  ),
+                                                    Image.asset(
+                                                  "assets/load.gif",
                                                 ),
                                                 fit: BoxFit.cover,
-                                                errorWidget: (context, url,
-                                                        error) =>
-                                                    const Icon(
-                                                        Icons.circle_outlined),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Image.asset(
+                                                  "assets/load.gif",
+                                                ),
                                               )),
                                         )),
                                   );

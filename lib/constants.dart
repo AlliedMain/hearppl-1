@@ -113,9 +113,7 @@ class Constants {
       // actionsForegroundColor: getWhit  eColor(),
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
-
       transitionBetweenRoutes: transition,
-
       middle: Text(
         title,
         style: TextStyle(

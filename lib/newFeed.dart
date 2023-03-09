@@ -18,8 +18,7 @@ import 'package:hearppl/home.dart';
 import 'package:hearppl/main.dart';
 import 'package:hearppl/profile.dart';
 import 'package:hearppl/register.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:image_picker/image_picker.dart'; 
 import 'package:path/path.dart' as Path;
 import 'package:hearppl/topics.dart';
 import 'package:intro_slider/intro_slider.dart';
@@ -425,12 +424,12 @@ class _NewFeedState extends State<NewFeed> {
   var currentSelectedValue;
 
   void showModalBottomSheetCupetino() async {
-    await showCupertinoModalBottomSheet(
+    await showModalBottomSheet(
       useRootNavigator: true,
       context: context,
-      bounce: true,
+      // bounce: true,
       isDismissible: true,
-      expand: true,
+      // expand: true,
       builder: (context) => Material(child: StatefulBuilder(builder:
           (BuildContext context,
               StateSetter setState /*You can rename this!*/) {

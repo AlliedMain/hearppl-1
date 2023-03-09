@@ -16,7 +16,7 @@ import 'package:hearppl/login.dart';
 import 'package:hearppl/topics.dart';
 
 late List<CameraDescription> cameras;
-void main() async {
+void main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -57,6 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         FormData formData = new FormData.fromMap({
+          "getAllPosts": "getAllPosts",
+          "getAllPosts": "getAllPosts",
+          "getAllPosts": "getAllPosts",
           "getAllPosts": "getAllPosts",
         });
         try {

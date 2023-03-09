@@ -19,8 +19,7 @@ import 'package:hearppl/notifictaions.dart';
 import 'package:hearppl/register.dart';
 
 import 'package:hearppl/bottomNav.dart';
-import 'package:hearppl/topics.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:hearppl/topics.dart'; 
 import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -68,10 +67,10 @@ class _ProfileState extends State<Profile> {
   }
 
   void showModalBottomSheetCupetino() async {
-    await showCupertinoModalBottomSheet(
+    await showModalBottomSheet(
       useRootNavigator: true,
       context: context,
-      bounce: true,
+      // bounce: true,
       isDismissible: true,
       builder: (context) => Material(child: StatefulBuilder(builder:
           (BuildContext context,
